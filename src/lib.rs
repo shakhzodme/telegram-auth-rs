@@ -26,11 +26,9 @@ fn extract_data_check_string(value: Value) -> Result<(String, String), Validatio
                 .collect::<std::collections::BTreeMap<String, String>>();
 
             let hash = kv
-                .iter()
-                .find(|(key, _)| key == &"hash")
-                .ok_or(ValidationError::InvalidInput)?;
-
-            let hash = (*hash.1).to_string();
+                .get("hash")
+                .ok_or(ValidationError::InvalidInput)?
+                .to_string();
 
             Ok((
                 hash,
